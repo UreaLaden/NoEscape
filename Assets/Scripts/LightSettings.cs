@@ -10,28 +10,35 @@ public class LightSettings : MonoBehaviour
     [SerializeField] private GameObject nightVisionUI;
     [SerializeField] private GameObject flashLight;
     private bool _nightVisionActive = false;
-
     private bool _flashlightActive = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    private bool canDrainBattery = true;
+  
     void Update()
     {
-        _postProcessVolume.profile = _nightVisionActive ? _postProcessProfiles[1] : _postProcessProfiles[0];
-        nightVisionUI.SetActive(_nightVisionActive);
-        flashLight.SetActive(_flashlightActive);
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            _nightVisionActive = !_nightVisionActive;
-        }
+        canDrainBattery = GameManager.BatteryPower > 0f;
+        _postProcessVolume.profile = _nightVisionActive && canDrainBattery ? _postProcessProfiles[1] : _postProcessProfiles[0]; 
+        
+        ToggleNightVision();
+        ToggleFlashLight();
+    }
 
+    private void ToggleFlashLight()
+    {
+        flashLight.SetActive(_flashlightActive && canDrainBattery);
         if (Input.GetKeyUp(KeyCode.F))
         {
             _flashlightActive = !_flashlightActive;
+            GameManager.FlashLightActive = !GameManager.FlashLightActive;
+        }
+    }
+
+    private void ToggleNightVision()
+    {
+        nightVisionUI.SetActive(_nightVisionActive && canDrainBattery);
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            _nightVisionActive = !_nightVisionActive;
+            GameManager.NightVisionActive = !GameManager.NightVisionActive;
         }
     }
 }
