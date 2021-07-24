@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     public static int PlayerHealth = 5;
     public static int Apples = 0;
     public static int Batteries = 0;
+    public static int Ammo = 0;
     public static int amountToRestore;
     
     public static float BatteryPower;
