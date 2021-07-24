@@ -23,6 +23,12 @@ public class PlayerHealth : MonoBehaviour
     GameManager.OnHealthChanged.AddListener(UpdateHealth);
   }
 
+  private void Update()
+  {
+    if (GameManager.PlayerHealth > 100) { GameManager.PlayerHealth = 100; }
+    if (GameManager.PlayerHealth < 0) { GameManager.PlayerHealth = 0; }
+  }
+
   private void UpdateHealth()
   {
     playerHealthText.text = GameManager.PlayerHealth + "%";

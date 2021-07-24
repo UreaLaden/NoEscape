@@ -18,10 +18,10 @@ public class PickupButton : MonoBehaviour
     {
         if (itemConsumed)
         {
-            gameObject.SetActive(false);
             SetReplenishAmount(_itemType);
             GameManager.ItemConsumed = false;
             GameManager.OnConsumeItem.RemoveListener(ConsumeItem);
+            gameObject.SetActive(false);
         }
     }
 
@@ -39,14 +39,30 @@ public class PickupButton : MonoBehaviour
         AudioManager.Instance.pickupSounds[1].Play();
     }
 
-    private void SetReplenishAmount(Item.ItemType itemType)
+   
+
+    public void ReloadBolt()
     {
-        switch (itemType)
+        itemConsumed = GameManager.Bolts < 2;
+        GameManager.ItemConsumed = GameManager.Bolts < 2;
+    }
+
+    private void SetReplenishAmount(Item.ItemType target)
+    {
+        switch (target)
         {
             case Item.ItemType.APPLE:
                 GameManager.amountToRestore = GameManager.PlayerHealth >= 100 ? 0 : replenishAmount;
                 break;
             case Item.ItemType.BATTERY:
+                BatteryPower.instance.ReplenishBattery(replenishAmount);
+                GameManager.amountToRestore = 0;
+                break;
+            case Item.ItemType.AMMO:
+                BatteryPower.instance.ReplenishBattery(replenishAmount);
+                GameManager.amountToRestore = 0;
+                break;
+            case Item.ItemType.BOLT:
                 BatteryPower.instance.ReplenishBattery(replenishAmount);
                 GameManager.amountToRestore = 0;
                 break;
