@@ -29,12 +29,14 @@ public class PickupButton : MonoBehaviour
     {        
         itemConsumed = GameManager.PlayerHealth < 100;
         GameManager.ItemConsumed = GameManager.PlayerHealth < 100;
+        AudioManager.Instance.pickupSounds[0].Play();
     }
 
     public void ReplenishBattery()
     {
         itemConsumed = GameManager.BatteryPower < 1;
         GameManager.ItemConsumed = GameManager.BatteryPower < 1;
+        AudioManager.Instance.pickupSounds[1].Play();
     }
 
     private void SetReplenishAmount(Item.ItemType itemType)
