@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Item : MonoBehaviour
 {
-    public enum ItemType{APPLE,AMMO,BATTERY}
+    public enum ItemType{APPLE,AMMO,BATTERY,KNIFE,CROSSBOW,HANDGUN,AXE,BAT}
     public ItemType selectedItem;
     
 }

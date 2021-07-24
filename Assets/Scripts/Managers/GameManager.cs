@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public static Item.ItemType currentItemInView;
     
     public static GameObject ConsumedItem;
-    
+    public static List<Item.ItemType> availableWeapons = new List<Item.ItemType>(); 
     public static int PlayerHealth = 5;
     public static int Apples = 0;
     public static int Batteries = 0;

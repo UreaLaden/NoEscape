@@ -40,16 +40,34 @@ public class Pickup : MonoBehaviour
 
     private bool CheckCanPickUp(GameObject target)
     {
+        bool isOnHand = false;
         switch (target.GetComponent<Item>().selectedItem)
         {
             case Item.ItemType.APPLE:
-                return GameManager.Apples < 6;
+                isOnHand = GameManager.Apples < 6;
+                break;
             case Item.ItemType.AMMO:
                 break;
             case Item.ItemType.BATTERY:
-                return GameManager.Batteries < 4;
+                isOnHand = GameManager.Batteries < 4;
+                break;
+            case Item.ItemType.AXE:
+                isOnHand = !GameManager.availableWeapons.Contains(Item.ItemType.AXE);
+                break;
+            case Item.ItemType.BAT:
+                isOnHand = !GameManager.availableWeapons.Contains(Item.ItemType.BAT);
+                break;
+            case Item.ItemType.KNIFE:
+                isOnHand = !GameManager.availableWeapons.Contains(Item.ItemType.KNIFE);
+                break;
+            case Item.ItemType.HANDGUN:
+                isOnHand = !GameManager.availableWeapons.Contains(Item.ItemType.HANDGUN);
+                break;
+            case Item.ItemType.CROSSBOW:
+                isOnHand = !GameManager.availableWeapons.Contains(Item.ItemType.CROSSBOW);
+                break;
         }
-        return false;
+        return isOnHand;
     }
     private void ProcessPickup()
     {
@@ -59,25 +77,65 @@ public class Pickup : MonoBehaviour
             switch (currentTarget.GetComponent<Item>().selectedItem)
             {
                 case Item.ItemType.APPLE:
-                    GameManager.Apples += GameManager.Apples < 6 ? 1 : 0;
-                    AudioManager.Instance.pickupSounds[0].Play();
-                    if (GameManager.canPickupApple)
+                    if (CheckCanPickUp(currentTarget))
                     {
-                        Destroy(_hit.transform.gameObject);
+                        GameManager.Apples += GameManager.Apples < 6 ? 1 : 0;
+                        AudioManager.Instance.pickupSounds[0].Play();
+                        Destroy(currentTarget);
                     }
                     break;
                 case Item.ItemType.AMMO:
-                    Debug.Log("Its some Ammo!");
+                    if (CheckCanPickUp(currentTarget))
+                    {
+                        Debug.Log("Its some Ammo!");
+                        Destroy(currentTarget);
+                    }
                     break;
                 case Item.ItemType.BATTERY:
-                    GameManager.Batteries += GameManager.Batteries < 4 ? 1 : 0;
-                    AudioManager.Instance.pickupSounds[1].Play();
-                    if (GameManager.canPickupBattery)
+                    if (CheckCanPickUp(currentTarget))
                     {
-                        Destroy(_hit.transform.gameObject);
+                        GameManager.Batteries += GameManager.Batteries < 4 ? 1 : 0;
+                        AudioManager.Instance.pickupSounds[1].Play();
+                        Destroy(currentTarget);
+                    }
+                    break;
+                case Item.ItemType.AXE:
+                    if (!GameManager.availableWeapons.Contains(currentTarget.GetComponent<Item>().selectedItem))
+                    {
+                        GameManager.availableWeapons.Add(currentTarget.GetComponent<Item>().selectedItem);
+                        Destroy(currentTarget); 
+                    }
+                    break;
+                case Item.ItemType.BAT:
+                    if (!GameManager.availableWeapons.Contains(currentTarget.GetComponent<Item>().selectedItem))
+                    {
+                        GameManager.availableWeapons.Add(currentTarget.GetComponent<Item>().selectedItem);
+                        Destroy(currentTarget); 
+                    }
+                    break;
+                case Item.ItemType.KNIFE:
+                    if (!GameManager.availableWeapons.Contains(currentTarget.GetComponent<Item>().selectedItem))
+                    {
+                        GameManager.availableWeapons.Add(currentTarget.GetComponent<Item>().selectedItem);
+                        Destroy(currentTarget); 
+                    }
+                    break;
+                case Item.ItemType.HANDGUN:
+                    if (!GameManager.availableWeapons.Contains(currentTarget.GetComponent<Item>().selectedItem))
+                    {
+                        GameManager.availableWeapons.Add(currentTarget.GetComponent<Item>().selectedItem);
+                        Destroy(currentTarget); 
+                    }
+                    break;
+                case Item.ItemType.CROSSBOW:
+                    if (!GameManager.availableWeapons.Contains(currentTarget.GetComponent<Item>().selectedItem))
+                    {
+                        GameManager.availableWeapons.Add(currentTarget.GetComponent<Item>().selectedItem);
+                        Destroy(currentTarget); 
                     }
                     break;
             }
+            
             GameManager.ItemInView = false;
         }
     }

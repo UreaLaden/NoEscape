@@ -9,6 +9,7 @@ public class InventoryMenu : MonoBehaviour
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject[] Apples;
     [SerializeField] private GameObject[] Batteries;
+    [SerializeField] private GameObject[] Weapons;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -44,6 +45,12 @@ public class InventoryMenu : MonoBehaviour
         for (int j = 0; j < Batteries.Length; j++)
         {
             Batteries[j].SetActive(j < GameManager.Batteries);
+        }
+
+        for (int k = 0; k < Weapons.Length; k++)
+        {
+            Item.ItemType weaponType = Weapons[k].GetComponent<Item>().selectedItem;
+            Weapons[k].SetActive(GameManager.availableWeapons.Contains(weaponType));
         }
         GameManager.OnItemInView.RemoveListener(CheckInventory);
         GameManager.OnItemInView.AddListener(CheckInventory);
