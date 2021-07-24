@@ -39,5 +39,6 @@ public class BatteryPower : MonoBehaviour
         batteryFgImage.fillAmount += replenishAmount / 100;
         remainingPower = batteryFgImage.fillAmount;
         GameManager.BatteryPower = remainingPower;
+        GameManager.Batteries--;
     }
 }

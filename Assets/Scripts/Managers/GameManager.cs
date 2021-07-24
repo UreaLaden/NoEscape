@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
     public static bool isPaused = false;
     public static bool canPickupApple = true;
     public static bool canPickupBattery = true;
+    public static bool canPickup = true;
     public static bool ItemConsumed = false;
 
     private void Update()

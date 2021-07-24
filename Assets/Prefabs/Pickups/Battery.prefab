@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7995026763083675043}
   - component: {fileID: 7967908744151533043}
   - component: {fileID: 7976114024389836703}
-  - component: {fileID: 7990695828352548526}
   - component: {fileID: 7990695828352548514}
   - component: {fileID: 7990695828352548521}
+  - component: {fileID: 395004741285754018}
   m_Layer: 0
   m_Name: Battery
   m_TagString: Pickup
@@ -84,19 +84,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &7990695828352548526
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7990077256015173673}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0.000000029802322, y: 0.012331024, z: -0.000000037252903}
 --- !u!95 &7990695828352548514
 Animator:
   serializedVersion: 3
@@ -129,3 +116,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selectedItem: 2
+--- !u!136 &395004741285754018
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7990077256015173673}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 0.5
+  m_Direction: 1
+  m_Center: {x: 0.000000029802322, y: 0.012331024, z: -0.000000037252903}
