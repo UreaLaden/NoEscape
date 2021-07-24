@@ -14,17 +14,31 @@ public class PlayerHealth : MonoBehaviour
   private void Start()
   {
     playerHealthText.text = GameManager.PlayerHealth + "%";
+
     if (GameManager.OnHealthChanged == null)
     {
       GameManager.OnHealthChanged = new UnityEvent();
     }
+    GameManager.OnConsumeItem.AddListener(RestoreHealth);
     GameManager.OnHealthChanged.AddListener(UpdateHealth);
   }
 
   private void UpdateHealth()
   {
-    Debug.Log("Updating Health");
     playerHealthText.text = GameManager.PlayerHealth + "%";
     GameManager.PlayerHealthChanged = false;
+    GameManager.OnHealthChanged.RemoveListener(UpdateHealth);
+    GameManager.OnHealthChanged.AddListener(UpdateHealth);
+  }
+  
+  private void RestoreHealth()
+  {
+      GameManager.amountToRestore = GameManager.PlayerHealth < 100 && GameManager.PlayerHealth >= 0 ? GameManager.amountToRestore : 0;
+      GameManager.Apples--;
+      GameManager.PlayerHealth += GameManager.amountToRestore;
+      GameManager.PlayerHealthChanged = true;
+      GameManager.ItemConsumed = false;
+      GameManager.OnConsumeItem.RemoveListener(RestoreHealth);
+      GameManager.OnConsumeItem.AddListener(RestoreHealth);
   }
 }

@@ -11,11 +11,9 @@ public class Pickup : MonoBehaviour
     [SerializeField] private float maxDistance = 4.0f;
     [SerializeField] private GameObject pickupMessage;
     private TMP_Text pickupMessageText;
-    private Ray ray;
 
     private float _rayDistance;
     private bool _canSeePickup = false;
-    private Item _item;
 
     private void Start()
     {
@@ -31,7 +29,7 @@ public class Pickup : MonoBehaviour
     {
         pickupMessageText.text = GameManager.canPickupApple ? "Press 'E' to pickup" : "I have enough of those";
         _rayDistance = _canSeePickup ? 1000f : maxDistance;
-        ray = new Ray(transform.position, transform.forward);
+        Ray ray = new Ray(transform.position, transform.forward);
         if (Physics.Raycast(ray, out _hit, _rayDistance))
         {
             _canSeePickup = _hit.collider.CompareTag("Pickup");

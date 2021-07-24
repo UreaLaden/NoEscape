@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,18 +8,20 @@ public class InventoryMenu : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject[] Apples;
+
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
         CheckInventory();
+        
         if (GameManager.OnItemInView == null)
         {
             GameManager.OnItemInView = new UnityEvent();
         }
         GameManager.OnItemInView.AddListener(CheckInventory);
     }
+    
 
-    // Update is called once per frame
     void Update()
     {
         inventoryPanel.SetActive(GameManager.isPaused);
@@ -30,11 +33,15 @@ public class InventoryMenu : MonoBehaviour
         }
     }
 
+   
     private void CheckInventory()
     {
         for (int i = 0; i < Apples.Length; i++)
         {
             Apples[i].SetActive(i < GameManager.Apples);
         }
+        GameManager.OnItemInView.RemoveListener(CheckInventory);
+        GameManager.OnItemInView.AddListener(CheckInventory);
     }
+    
 }
