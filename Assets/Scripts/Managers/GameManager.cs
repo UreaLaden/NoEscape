@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     
     public static int PlayerHealth = 5;
     public static int Apples = 0;
+    public static int Batteries = 0;
     public static int amountToRestore;
     
     public static float BatteryPower;
@@ -25,11 +26,14 @@ public class GameManager : MonoBehaviour
     public static bool NightVisionActive = false;
     public static bool isPaused = false;
     public static bool canPickupApple = true;
+    public static bool canPickupBattery = true;
     public static bool ItemConsumed = false;
 
     private void Update()
     {
         canPickupApple = Apples < 6;
+        canPickupBattery = Batteries < 4;
+        
         if (PlayerHealth > 100) { PlayerHealth = 100; }
         if (PlayerHealth < 0) { PlayerHealth = 0; }
 

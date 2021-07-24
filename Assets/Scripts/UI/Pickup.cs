@@ -14,7 +14,7 @@ public class Pickup : MonoBehaviour
 
     private float _rayDistance;
     private bool _canSeePickup = false;
-
+    private GameObject currentTarget;
     private void Start()
     {
         pickupMessageText = pickupMessage.GetComponentInChildren<TMP_Text>();
@@ -33,6 +33,7 @@ public class Pickup : MonoBehaviour
         if (Physics.Raycast(ray, out _hit, _rayDistance))
         {
             _canSeePickup = _hit.collider.CompareTag("Pickup");
+            currentTarget = _hit.collider.gameObject;
         }
         pickupMessage.gameObject.SetActive(_canSeePickup);
         GameManager.ItemInView = _canSeePickup;      
@@ -42,7 +43,7 @@ public class Pickup : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.E) || Input.GetMouseButtonDown(0))
         {
-            switch (GameManager.currentItemInView)
+            switch (currentTarget.GetComponent<Item>().selectedItem)
             {
                 case Item.ItemType.APPLE:
                     GameManager.Apples += GameManager.Apples < 6 ? 1 : 0;
@@ -50,12 +51,19 @@ public class Pickup : MonoBehaviour
                     {
                         Destroy(_hit.transform.gameObject);
                     }
-                    GameManager.ItemInView = false;
                     break;
                 case Item.ItemType.AMMO:
                     Debug.Log("Its some Ammo!");
                     break;
+                case Item.ItemType.BATTERY:
+                    GameManager.Batteries += GameManager.Batteries < 4 ? 1 : 0;
+                    if (GameManager.canPickupBattery)
+                    {
+                        Destroy(_hit.transform.gameObject);
+                    }
+                    break;
             }
+            GameManager.ItemInView = false;
         }
     }
 }

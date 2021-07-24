@@ -7,11 +7,17 @@ using UnityEngine.UI;
 
 public class BatteryPower : MonoBehaviour
 {
+    public static BatteryPower instance;
     [SerializeField] private Image batteryFgImage;
 
     [SerializeField] private float drainTime = 15.0f;
 
     [SerializeField] private float remainingPower;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Start()
     {
@@ -26,5 +32,12 @@ public class BatteryPower : MonoBehaviour
             remainingPower = batteryFgImage.fillAmount;
             GameManager.BatteryPower = remainingPower;
         }
+    }
+
+    public void ReplenishBattery(float replenishAmount)
+    {
+        batteryFgImage.fillAmount += replenishAmount / 100;
+        remainingPower = batteryFgImage.fillAmount;
+        GameManager.BatteryPower = remainingPower;
     }
 }

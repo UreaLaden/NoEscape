@@ -8,7 +8,7 @@ public class InventoryMenu : MonoBehaviour
 {
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject[] Apples;
-
+    [SerializeField] private GameObject[] Batteries;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Confined;
@@ -39,6 +39,11 @@ public class InventoryMenu : MonoBehaviour
         for (int i = 0; i < Apples.Length; i++)
         {
             Apples[i].SetActive(i < GameManager.Apples);
+        }
+
+        for (int j = 0; j < Batteries.Length; j++)
+        {
+            Batteries[j].SetActive(j < GameManager.Batteries);
         }
         GameManager.OnItemInView.RemoveListener(CheckInventory);
         GameManager.OnItemInView.AddListener(CheckInventory);

@@ -8,6 +8,7 @@ public class PickupButton : MonoBehaviour
 {
     [SerializeField] private int replenishAmount = 25;
     public bool itemConsumed = false;
+    [SerializeField] private Item.ItemType _itemType;
     void Start()
     {
         GameManager.OnConsumeItem?.AddListener(ConsumeItem);
@@ -18,7 +19,7 @@ public class PickupButton : MonoBehaviour
         if (itemConsumed)
         {
             gameObject.SetActive(false);
-            GameManager.amountToRestore = GameManager.PlayerHealth >= 100 ? 0 : replenishAmount;
+            SetReplenishAmount(_itemType);
             GameManager.ItemConsumed = false;
             GameManager.OnConsumeItem.RemoveListener(ConsumeItem);
         }
@@ -28,6 +29,26 @@ public class PickupButton : MonoBehaviour
     {        
         itemConsumed = GameManager.PlayerHealth < 100;
         GameManager.ItemConsumed = GameManager.PlayerHealth < 100;
+    }
+
+    public void ReplenishBattery()
+    {
+        itemConsumed = GameManager.BatteryPower < 1;
+        GameManager.ItemConsumed = GameManager.BatteryPower < 1;
+    }
+
+    private void SetReplenishAmount(Item.ItemType itemType)
+    {
+        switch (itemType)
+        {
+            case Item.ItemType.APPLE:
+                GameManager.amountToRestore = GameManager.PlayerHealth >= 100 ? 0 : replenishAmount;
+                break;
+            case Item.ItemType.BATTERY:
+                BatteryPower.instance.ReplenishBattery(replenishAmount);
+                GameManager.amountToRestore = 0;
+                break;
+        }
     }
    
 }
